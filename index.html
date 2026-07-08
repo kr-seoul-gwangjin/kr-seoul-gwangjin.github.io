@@ -267,6 +267,42 @@ body { padding-top: var(--cg-strip-h); }
 .cg-colophon-note { margin: 4px 0 0; color: #9a9aa8; }
 @media (max-width: 640px) { .cg-strip-label { display: none; } }
 @media (prefers-reduced-motion: reduce) { .cg-skip { transition: none; } }
+
+/* ---- Mobile reading view (touch / small screens) ------------------------------------- */
+/* The immersive per-구 template is desktop-only. On touch devices and narrow screens the
+   .cg-read view is shown instead — it uses only safe, high-contrast CSS so text can never
+   go invisible on iOS Safari (no background-clip:text, backdrop-filter, 100vh, :hover-gated
+   reveals, or mix-blend-mode). Fully namespaced + generator-controlled. */
+.cg-read { display: none; }
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  /* Neutralise immersive templates that lock scrolling / lock the viewport on <body>. */
+  html, body { overflow-x: hidden !important; overflow-y: auto !important; height: auto !important;
+    min-height: 0 !important; position: static !important; touch-action: auto !important; background: #ffffff !important; }
+  .cg-immersive { display: none !important; }
+  .cg-read { display: block; }
+}
+.cg-read { max-width: 720px; margin: 0 auto; padding: 20px 18px 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: #17171f; background: #ffffff; line-height: 1.75; -webkit-text-size-adjust: 100%; }
+.cg-read * { max-width: 100%; box-sizing: border-box; }
+.cg-read-head { padding: 8px 0 16px; border-bottom: 3px solid var(--cg-ra, #2d5bff); margin-bottom: 20px; }
+.cg-read-eyebrow { margin: 0 0 4px; color: var(--cg-rd, #333); font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+.cg-read-head h1 { margin: 0; font-size: clamp(30px, 8vw, 40px); line-height: 1.15; color: #14141c; font-weight: 800; }
+.cg-read h2 { font-size: 20px; margin: 30px 0 10px; padding-left: 11px; color: #14141c; font-weight: 700;
+  border-left: 5px solid var(--cg-ra, #2d5bff); }
+.cg-read p { margin: 0 0 12px; font-size: 17px; color: #23232d; }
+.cg-read section { margin: 0; }
+.cg-read ul { margin: 8px 0 0; padding-left: 20px; }
+.cg-read li { margin: 8px 0; font-size: 16px; color: #23232d; }
+.cg-read li strong { color: #111119; font-weight: 700; }
+.cg-read .facts, .cg-read .symbols { list-style: none; padding: 14px 16px; margin: 8px 0 0;
+  background: #f5f6fa; border: 1px solid #e6e8f0; border-radius: 12px; }
+.cg-read .faq details { border: 1px solid #e6e8f0; border-radius: 10px; padding: 10px 14px; margin: 8px 0; background: #fbfbfd; }
+.cg-read .faq summary { cursor: pointer; font-weight: 700; font-size: 16px; color: #14141c; }
+.cg-read .faq details p { margin: 8px 0 2px; color: #44454f; }
+.cg-read a { color: #1a46d8; word-break: break-word; }
+.cg-read .sources { font-size: 14px; color: #55565f; }
+.cg-read .sources a { color: #3a5bd0; }
 </style>
 </head>
 <body>
@@ -275,6 +311,7 @@ body { padding-top: var(--cg-strip-h); }
     <span class="cg-ad">AD</span><span class="cg-strip-label">후원 파트너</span><span class="cg-strip-list"><a class="cg-strip-item" href="https://ikoffices.com" rel="sponsored noopener" target="_blank">일광오피스</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://mobidicsaju.com" rel="sponsored noopener" target="_blank">모비딕 사주</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://www.foodskorea.com/" rel="sponsored noopener" target="_blank">전국팔도 식품도감</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://myflowmakers.com" rel="sponsored noopener" target="_blank">마이플로우메이커스</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://yeonlijispace.com" rel="sponsored noopener" target="_blank">연리지 인테리어</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://yeonliji.io" rel="sponsored noopener" target="_blank">주식회사 연리지</a><span class="cg-strip-dot" aria-hidden="true">·</span><span class="cg-strip-item cg-strip-text">세무·법률 자문</span></span>
   </aside>
   <div id="cg-main" tabindex="-1"></div>
+  <div class="cg-immersive">
 <style>
   :root{
     --gj-blue:#0000FF;
@@ -357,120 +394,7 @@ body { padding-top: var(--cg-strip-h); }
     .gj-reel{scroll-behavior:auto;}
   }
 
-  /* ===== Content sections styling (the real       <section id="intro">
-        <h2>지역 소개</h2>
-        <p>광진구는 서울특별시 동부, 한강 북안에 자리한 자치구로 1995년 성동구에서 갈라져 나온 비교적 젊은 행정구역입니다. 건국대학교와 세종대학교를 낀 건대입구 일대가 서울 동부를 대표하는 대학 상권이자 젊음의 거리로 성장하면서 밤낮없이 활기가 넘치는 곳입니다. 능동의 서울어린이대공원, 광장동의 아차산, 자양동의 뚝섬 한강변이 한 구 안에 모여 있어 도심 속에서 산과 강, 대형 공원을 동시에 누릴 수 있는 드문 생활권을 이룹니다. 구의역 앞으로 옮겨온 새 통합청사와 함께 재개발이 이어지며 주거·상업·문화 기능이 촘촘히 얽힌 도시로 자리잡았습니다. 강변역 곁의 동서울종합버스터미널은 수도권 동부와 강원 방면을 잇는 관문 역할을 오랫동안 맡아 왔습니다.</p>
-      </section>
-      <section id="facts">
-        <h2>주요 통계</h2>
-        <ul class="facts">
-          <li>인구: 약 337,713명 (2022)</li>
-          <li>면적: 17.06 km²</li>
-          <li>신설: 1995-03-01</li>
-        </ul>
-      </section>
-      <section id="history">
-        <h2>역사</h2>
-        <p>광진구라는 이름은 옛 나루터 광나루(廣津)에서 비롯된 것으로, 한강을 건너던 교통 요충지였던 이 일대의 역사를 담고 있습니다. 삼국시대에는 아차산성을 둘러싸고 고구려와 백제, 신라가 한강 유역의 패권을 다투던 전략 요충지였으며, 온달 장군과 평강공주의 전설이 서린 곳으로도 전해집니다. 조선시대에는 경기도 양주·고양 등지에 속했다가 근대 행정구역 개편을 거쳐 성동구 관할이 되었습니다. 1995년 3월 1일 성동구에서 분리되어 독립된 자치구로 신설되면서 지금의 광진구가 출범하였습니다. 이후 2008년과 2009년에 걸쳐 노유동·모진동 등이 정비되며 7개 법정동 체계로 재편되었고, 2025년 4월에는 개청 30주년을 맞아 구의역 앞 옛 서울동부지방법원 자리로 통합청사를 옮겼습니다.</p>
-      </section>
-      <section id="geography">
-        <h2>지리·자연환경</h2>
-        <p>광진구는 서울 동부에 위치하며 면적은 약 17.06㎢로, 북쪽으로 중랑구, 서쪽으로 동대문구·성동구와 접하고 동쪽으로는 경기도 구리시와 맞닿아 있습니다. 남쪽은 한강을 경계로 강남구·송파구·강동구를 마주보며, 강변을 따라 넓은 둔치와 한강공원이 펼쳐집니다. 구의 동쪽 경계에는 해발 287m의 아차산과 348m의 용마산이 능선을 이루며 서울과 경기의 경계 산지를 형성합니다. 이 산자락에서 흘러내린 완만한 구릉과 한강 사이의 평탄지에 시가지가 발달해 있어 산과 강이 남북으로 감싸는 지형입니다. 아차산 능선에서는 한강과 도심을 한눈에 조망할 수 있어 일출과 야경 명소로도 알려져 있습니다.</p>
-      </section>
-      <section id="characteristics">
-        <h2>지역 특징</h2>
-        <p>광진구의 인구는 2022년 기준 약 33만7천 명 규모로, 7개 법정동을 15개 행정동으로 나누어 관리하는 주거·상업 복합형 자치구입니다. 건국대·세종대·장로회신학대 등 대학이 밀집해 청년과 대학생 유동 인구가 많고, 건대입구의 로데오거리·양꼬치거리·먹자골목이 서울 동부의 대표 소비 상권을 이룹니다. 대규모 제조업 기반보다는 대학가 상권, 요식·유통·문화 서비스업과 강변역 일대 테크노마트·전자상가 상권이 지역 경제를 떠받칩니다. 자양동·구의동을 중심으로 한 아파트 단지와 재개발 사업으로 주거 수요가 꾸준하며, 광나루·워커힐 방면은 상대적으로 한적한 주거·자연 지대를 이룹니다. 대학의 젊은 활력과 한강·아차산의 여가 자원이 결합해 생활 밀착형 도시 성격이 뚜렷한 곳입니다.</p>
-      </section>
-      <section id="landmarks">
-        <h2>대표 명소</h2>
-        <ul>
-          <li><strong>서울어린이대공원</strong> — 능동에 자리한 시립 공원으로 1973년 어린이날에 개장했으며, 약 53만㎡ 부지에 동물원·식물원·놀이동산과 넓은 잔디밭을 갖춘 광진구의 대표 나들이 명소입니다.</li>
-          <li><strong>아차산</strong> — 광장동에 솟은 해발 287m의 산으로 한강과 서울 도심을 조망하는 야경·일출 명소이며, 고구려 온달 장군의 전설과 삼국시대 산성이 서린 도심형 등산지입니다.</li>
-          <li><strong>건대입구 로데오거리</strong> — 건국대학교 앞 화양동 일대에 형성된 서울 동부의 대표 번화가로, 로데오 패션거리·양꼬치거리·먹자골목과 컨테이너 쇼핑몰 커먼그라운드가 어우러진 청년 상권입니다.</li>
-          <li><strong>동서울종합버스터미널</strong> — 강변역 곁에 위치한 대형 버스터미널로 강원·충청·경기 동부를 잇는 시외·고속버스가 발착하는 서울 동부의 교통 관문입니다.</li>
-        </ul>
-      </section>
-      <section id="heritage">
-        <h2>문화유산·문화시설</h2>
-        <ul>
-          <li><strong>아차산성(사적 제234호)</strong> — 광장동 아차산 자락에 자리한 삼국시대 산성으로, 한강 유역을 두고 고구려·백제·신라가 다투던 전략 요충지였으며 온달 장군 전설이 전해지는 국가지정 문화재입니다.</li>
-          <li><strong>아차산 일대 보루군(사적 제455호)</strong> — 아차산·용마산 능선의 봉우리마다 축조된 고구려 소형 석축 산성 유적으로, 남한에서 드물게 고구려 유물과 유구가 집중 확인된 학술적 가치가 높은 유적입니다.</li>
-          <li><strong>나루아트센터</strong> — 광진구가 운영하는 지역 공연·전시 문화시설로 대공연장과 전시실을 갖추어 음악회·연극·전시 등 다양한 문화예술 프로그램을 주민에게 제공하는 구 대표 문화공간입니다.</li>
-          <li><strong>건국대학교 박물관</strong> — 화양동 건국대학교 캠퍼스 안에 있는 대학 박물관으로, 고고·역사 유물과 미술품을 소장·전시하여 지역민과 학생이 함께 이용하는 문화·교육 공간입니다.</li>
-        </ul>
-      </section>
-      <section id="nature">
-        <h2>자연·휴식</h2>
-        <ul>
-          <li><strong>뚝섬한강공원</strong> — 자양동 한강변에 조성된 대표 수변 공원으로 자전거길·산책로·수영장·물놀이장과 유람선 선착장을 갖추어 사계절 시민의 휴식과 레저 공간이 됩니다.</li>
-          <li><strong>용마산·아차산 자락길</strong> — 아차산과 용마산 능선을 잇는 완만한 산책·등산 코스로, 서울둘레길과 이어지며 한강 조망과 고구려 보루 유적을 함께 즐길 수 있는 도심 트레킹 명소입니다.</li>
-          <li><strong>어린이대공원 숲과 잔디광장</strong> — 능동 어린이대공원 내부의 푸른 숲과 넓은 잔디밭으로, 도심 한복판에서 산책과 피크닉을 즐길 수 있는 대형 녹지 휴식 공간입니다.</li>
-          <li><strong>구의공원·자양나루 일대 한강변</strong> — 구의동·자양동 한강 둔치를 따라 이어지는 산책로와 생활 체육 공간으로, 강변북로 아래로 접근해 조깅과 나들이를 즐기는 주민 생활 녹지입니다.</li>
-        </ul>
-      </section>
-      <section id="transport">
-        <h2>교통</h2>
-        <p>광진구는 서울 지하철 2·5·7호선이 지나 도심과 강남·잠실 방면 접근성이 뛰어납니다. 2호선은 건대입구역·구의역·강변역을 잇는 지상 구간으로 구의 남부 상권을 관통하고, 5호선은 군자역·아차산역·광나루역을 지나 동서로 연결합니다. 7호선은 중곡역·군자역·어린이대공원역·건대입구역·자양역을 지나며 건대입구역과 군자역은 각각 2호선·5호선과 만나는 환승 거점입니다. 도로는 동서 방향의 천호대로와 남북 방향의 동일로가 간선을 이루고, 한강변을 따라 강변북로가 지나 자동차 이동이 편리합니다. 강변역 곁의 동서울종합버스터미널은 강원·충청·경기 동부를 잇는 시외·고속버스 관문으로, 광진구 교통의 핵심 결절점 역할을 합니다.</p>
-      </section>
-      <section id="symbols">
-        <h2>지역 상징</h2>
-        <ul class="symbols">
-          <li>구화(꽃): 진달래</li>
-          <li>구목(나무): 느티나무</li>
-          <li>구조(새): 까치</li>
-        </ul>
-      </section>
-      <section id="faq">
-        <h2>자주 묻는 질문</h2>
-        <div class="faq">
-          <details>
-            <summary>광진구청은 어디에 있나요?</summary>
-            <p>2025년 4월 구의역 앞 옛 서울동부지방법원 자리(아차산로 400 일대)로 옮긴 신청사에 있으며, 지하철 2호선 구의역에서 바로 연결됩니다.</p>
-          </details>
-          <details>
-            <summary>광진구를 지나는 지하철 노선은 무엇인가요?</summary>
-            <p>서울 지하철 2호선(건대입구·구의·강변), 5호선(군자·아차산·광나루), 7호선(중곡·군자·어린이대공원·건대입구·자양)이 지나며 건대입구역과 군자역이 환승역입니다.</p>
-          </details>
-          <details>
-            <summary>서울어린이대공원은 무료인가요?</summary>
-            <p>능동에 있는 서울어린이대공원은 입장료가 무료이며, 동물원·식물원과 넓은 잔디밭을 갖춰 가족 나들이 명소로 인기가 높습니다.</p>
-          </details>
-          <details>
-            <summary>아차산 등산은 초보자도 할 수 있나요?</summary>
-            <p>아차산은 해발 287m로 산세가 완만해 초보자도 부담 없이 오를 수 있으며, 정상 부근에서 한강과 서울 도심의 전망을 감상할 수 있습니다.</p>
-          </details>
-          <details>
-            <summary>건대입구 상권은 어떤 곳인가요?</summary>
-            <p>건국대·세종대를 낀 화양동 일대의 대학 상권으로 로데오 패션거리, 양꼬치거리, 먹자골목과 컨테이너 쇼핑몰 커먼그라운드가 어우러진 서울 동부의 대표 번화가입니다.</p>
-          </details>
-          <details>
-            <summary>지방으로 가는 버스는 광진구에서 탈 수 있나요?</summary>
-            <p>네, 지하철 2호선 강변역 옆 동서울종합버스터미널에서 강원·충청·경기 동부 등지로 향하는 시외·고속버스를 이용할 수 있습니다.</p>
-          </details>
-        </div>
-      </section>
-      <section id="links">
-        <h2>공식 링크</h2>
-        <ul>
-          <li><a href="https://www.gwangjin.go.kr" rel="noopener">광진구청 공식 홈페이지</a></li>
-        </ul>
-      </section>
-      <section id="github">
-        <h2>GitHub</h2>
-        <ul>
-          <li><a href="https://github.com/kr-seoul-gwangjin" rel="noopener">GitHub 조직: kr-seoul-gwangjin</a></li>
-          <li><a href="https://github.com/kr-seoul-gwangjin/kr-seoul-gwangjin.github.io" rel="noopener">이 사이트 저장소</a></li>
-        </ul>
-      </section>
-      <section id="sources">
-        <h2>출처</h2>
-        <ul class="sources">
-          <li><a href="https://ko.wikipedia.org/wiki/%EA%B4%91%EC%A7%84%EA%B5%AC" rel="noopener">광진구 - 위키백과</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.gwangjin.go.kr/portal/main/main.do" rel="noopener">광진구청 공식 포털사이트</a> (조회 2026-07-08)</li>
-          <li><a href="https://ko.wikipedia.org/wiki/%EC%95%84%EC%B0%A8%EC%82%B0_%EC%9D%BC%EB%8C%80_%EB%B3%B4%EB%A3%A8%EA%B5%B0" rel="noopener">아차산 일대 보루군 - 위키백과</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.sisul.or.kr/open_content/childrenpark/" rel="noopener">서울어린이대공원 - 서울시설공단</a> (조회 2026-07-08)</li>
-        </ul>
-      </section> lives here) ===== */
+  /* ===== Content sections styling (the real 콘텐츠 lives here) ===== */
   .gj-content-card .gj-panel{
     background:#fff;
     border:var(--gj-border);
@@ -604,120 +528,7 @@ body { padding-top: var(--cg-strip-h); }
       <div class="gj-swipehint gj-impact">▼ 전체 이야기 ▼</div>
     </section>
 
-    <!-- CARD 4 — FULL CONTENT (the mandatory       <section id="intro">
-        <h2>지역 소개</h2>
-        <p>광진구는 서울특별시 동부, 한강 북안에 자리한 자치구로 1995년 성동구에서 갈라져 나온 비교적 젊은 행정구역입니다. 건국대학교와 세종대학교를 낀 건대입구 일대가 서울 동부를 대표하는 대학 상권이자 젊음의 거리로 성장하면서 밤낮없이 활기가 넘치는 곳입니다. 능동의 서울어린이대공원, 광장동의 아차산, 자양동의 뚝섬 한강변이 한 구 안에 모여 있어 도심 속에서 산과 강, 대형 공원을 동시에 누릴 수 있는 드문 생활권을 이룹니다. 구의역 앞으로 옮겨온 새 통합청사와 함께 재개발이 이어지며 주거·상업·문화 기능이 촘촘히 얽힌 도시로 자리잡았습니다. 강변역 곁의 동서울종합버스터미널은 수도권 동부와 강원 방면을 잇는 관문 역할을 오랫동안 맡아 왔습니다.</p>
-      </section>
-      <section id="facts">
-        <h2>주요 통계</h2>
-        <ul class="facts">
-          <li>인구: 약 337,713명 (2022)</li>
-          <li>면적: 17.06 km²</li>
-          <li>신설: 1995-03-01</li>
-        </ul>
-      </section>
-      <section id="history">
-        <h2>역사</h2>
-        <p>광진구라는 이름은 옛 나루터 광나루(廣津)에서 비롯된 것으로, 한강을 건너던 교통 요충지였던 이 일대의 역사를 담고 있습니다. 삼국시대에는 아차산성을 둘러싸고 고구려와 백제, 신라가 한강 유역의 패권을 다투던 전략 요충지였으며, 온달 장군과 평강공주의 전설이 서린 곳으로도 전해집니다. 조선시대에는 경기도 양주·고양 등지에 속했다가 근대 행정구역 개편을 거쳐 성동구 관할이 되었습니다. 1995년 3월 1일 성동구에서 분리되어 독립된 자치구로 신설되면서 지금의 광진구가 출범하였습니다. 이후 2008년과 2009년에 걸쳐 노유동·모진동 등이 정비되며 7개 법정동 체계로 재편되었고, 2025년 4월에는 개청 30주년을 맞아 구의역 앞 옛 서울동부지방법원 자리로 통합청사를 옮겼습니다.</p>
-      </section>
-      <section id="geography">
-        <h2>지리·자연환경</h2>
-        <p>광진구는 서울 동부에 위치하며 면적은 약 17.06㎢로, 북쪽으로 중랑구, 서쪽으로 동대문구·성동구와 접하고 동쪽으로는 경기도 구리시와 맞닿아 있습니다. 남쪽은 한강을 경계로 강남구·송파구·강동구를 마주보며, 강변을 따라 넓은 둔치와 한강공원이 펼쳐집니다. 구의 동쪽 경계에는 해발 287m의 아차산과 348m의 용마산이 능선을 이루며 서울과 경기의 경계 산지를 형성합니다. 이 산자락에서 흘러내린 완만한 구릉과 한강 사이의 평탄지에 시가지가 발달해 있어 산과 강이 남북으로 감싸는 지형입니다. 아차산 능선에서는 한강과 도심을 한눈에 조망할 수 있어 일출과 야경 명소로도 알려져 있습니다.</p>
-      </section>
-      <section id="characteristics">
-        <h2>지역 특징</h2>
-        <p>광진구의 인구는 2022년 기준 약 33만7천 명 규모로, 7개 법정동을 15개 행정동으로 나누어 관리하는 주거·상업 복합형 자치구입니다. 건국대·세종대·장로회신학대 등 대학이 밀집해 청년과 대학생 유동 인구가 많고, 건대입구의 로데오거리·양꼬치거리·먹자골목이 서울 동부의 대표 소비 상권을 이룹니다. 대규모 제조업 기반보다는 대학가 상권, 요식·유통·문화 서비스업과 강변역 일대 테크노마트·전자상가 상권이 지역 경제를 떠받칩니다. 자양동·구의동을 중심으로 한 아파트 단지와 재개발 사업으로 주거 수요가 꾸준하며, 광나루·워커힐 방면은 상대적으로 한적한 주거·자연 지대를 이룹니다. 대학의 젊은 활력과 한강·아차산의 여가 자원이 결합해 생활 밀착형 도시 성격이 뚜렷한 곳입니다.</p>
-      </section>
-      <section id="landmarks">
-        <h2>대표 명소</h2>
-        <ul>
-          <li><strong>서울어린이대공원</strong> — 능동에 자리한 시립 공원으로 1973년 어린이날에 개장했으며, 약 53만㎡ 부지에 동물원·식물원·놀이동산과 넓은 잔디밭을 갖춘 광진구의 대표 나들이 명소입니다.</li>
-          <li><strong>아차산</strong> — 광장동에 솟은 해발 287m의 산으로 한강과 서울 도심을 조망하는 야경·일출 명소이며, 고구려 온달 장군의 전설과 삼국시대 산성이 서린 도심형 등산지입니다.</li>
-          <li><strong>건대입구 로데오거리</strong> — 건국대학교 앞 화양동 일대에 형성된 서울 동부의 대표 번화가로, 로데오 패션거리·양꼬치거리·먹자골목과 컨테이너 쇼핑몰 커먼그라운드가 어우러진 청년 상권입니다.</li>
-          <li><strong>동서울종합버스터미널</strong> — 강변역 곁에 위치한 대형 버스터미널로 강원·충청·경기 동부를 잇는 시외·고속버스가 발착하는 서울 동부의 교통 관문입니다.</li>
-        </ul>
-      </section>
-      <section id="heritage">
-        <h2>문화유산·문화시설</h2>
-        <ul>
-          <li><strong>아차산성(사적 제234호)</strong> — 광장동 아차산 자락에 자리한 삼국시대 산성으로, 한강 유역을 두고 고구려·백제·신라가 다투던 전략 요충지였으며 온달 장군 전설이 전해지는 국가지정 문화재입니다.</li>
-          <li><strong>아차산 일대 보루군(사적 제455호)</strong> — 아차산·용마산 능선의 봉우리마다 축조된 고구려 소형 석축 산성 유적으로, 남한에서 드물게 고구려 유물과 유구가 집중 확인된 학술적 가치가 높은 유적입니다.</li>
-          <li><strong>나루아트센터</strong> — 광진구가 운영하는 지역 공연·전시 문화시설로 대공연장과 전시실을 갖추어 음악회·연극·전시 등 다양한 문화예술 프로그램을 주민에게 제공하는 구 대표 문화공간입니다.</li>
-          <li><strong>건국대학교 박물관</strong> — 화양동 건국대학교 캠퍼스 안에 있는 대학 박물관으로, 고고·역사 유물과 미술품을 소장·전시하여 지역민과 학생이 함께 이용하는 문화·교육 공간입니다.</li>
-        </ul>
-      </section>
-      <section id="nature">
-        <h2>자연·휴식</h2>
-        <ul>
-          <li><strong>뚝섬한강공원</strong> — 자양동 한강변에 조성된 대표 수변 공원으로 자전거길·산책로·수영장·물놀이장과 유람선 선착장을 갖추어 사계절 시민의 휴식과 레저 공간이 됩니다.</li>
-          <li><strong>용마산·아차산 자락길</strong> — 아차산과 용마산 능선을 잇는 완만한 산책·등산 코스로, 서울둘레길과 이어지며 한강 조망과 고구려 보루 유적을 함께 즐길 수 있는 도심 트레킹 명소입니다.</li>
-          <li><strong>어린이대공원 숲과 잔디광장</strong> — 능동 어린이대공원 내부의 푸른 숲과 넓은 잔디밭으로, 도심 한복판에서 산책과 피크닉을 즐길 수 있는 대형 녹지 휴식 공간입니다.</li>
-          <li><strong>구의공원·자양나루 일대 한강변</strong> — 구의동·자양동 한강 둔치를 따라 이어지는 산책로와 생활 체육 공간으로, 강변북로 아래로 접근해 조깅과 나들이를 즐기는 주민 생활 녹지입니다.</li>
-        </ul>
-      </section>
-      <section id="transport">
-        <h2>교통</h2>
-        <p>광진구는 서울 지하철 2·5·7호선이 지나 도심과 강남·잠실 방면 접근성이 뛰어납니다. 2호선은 건대입구역·구의역·강변역을 잇는 지상 구간으로 구의 남부 상권을 관통하고, 5호선은 군자역·아차산역·광나루역을 지나 동서로 연결합니다. 7호선은 중곡역·군자역·어린이대공원역·건대입구역·자양역을 지나며 건대입구역과 군자역은 각각 2호선·5호선과 만나는 환승 거점입니다. 도로는 동서 방향의 천호대로와 남북 방향의 동일로가 간선을 이루고, 한강변을 따라 강변북로가 지나 자동차 이동이 편리합니다. 강변역 곁의 동서울종합버스터미널은 강원·충청·경기 동부를 잇는 시외·고속버스 관문으로, 광진구 교통의 핵심 결절점 역할을 합니다.</p>
-      </section>
-      <section id="symbols">
-        <h2>지역 상징</h2>
-        <ul class="symbols">
-          <li>구화(꽃): 진달래</li>
-          <li>구목(나무): 느티나무</li>
-          <li>구조(새): 까치</li>
-        </ul>
-      </section>
-      <section id="faq">
-        <h2>자주 묻는 질문</h2>
-        <div class="faq">
-          <details>
-            <summary>광진구청은 어디에 있나요?</summary>
-            <p>2025년 4월 구의역 앞 옛 서울동부지방법원 자리(아차산로 400 일대)로 옮긴 신청사에 있으며, 지하철 2호선 구의역에서 바로 연결됩니다.</p>
-          </details>
-          <details>
-            <summary>광진구를 지나는 지하철 노선은 무엇인가요?</summary>
-            <p>서울 지하철 2호선(건대입구·구의·강변), 5호선(군자·아차산·광나루), 7호선(중곡·군자·어린이대공원·건대입구·자양)이 지나며 건대입구역과 군자역이 환승역입니다.</p>
-          </details>
-          <details>
-            <summary>서울어린이대공원은 무료인가요?</summary>
-            <p>능동에 있는 서울어린이대공원은 입장료가 무료이며, 동물원·식물원과 넓은 잔디밭을 갖춰 가족 나들이 명소로 인기가 높습니다.</p>
-          </details>
-          <details>
-            <summary>아차산 등산은 초보자도 할 수 있나요?</summary>
-            <p>아차산은 해발 287m로 산세가 완만해 초보자도 부담 없이 오를 수 있으며, 정상 부근에서 한강과 서울 도심의 전망을 감상할 수 있습니다.</p>
-          </details>
-          <details>
-            <summary>건대입구 상권은 어떤 곳인가요?</summary>
-            <p>건국대·세종대를 낀 화양동 일대의 대학 상권으로 로데오 패션거리, 양꼬치거리, 먹자골목과 컨테이너 쇼핑몰 커먼그라운드가 어우러진 서울 동부의 대표 번화가입니다.</p>
-          </details>
-          <details>
-            <summary>지방으로 가는 버스는 광진구에서 탈 수 있나요?</summary>
-            <p>네, 지하철 2호선 강변역 옆 동서울종합버스터미널에서 강원·충청·경기 동부 등지로 향하는 시외·고속버스를 이용할 수 있습니다.</p>
-          </details>
-        </div>
-      </section>
-      <section id="links">
-        <h2>공식 링크</h2>
-        <ul>
-          <li><a href="https://www.gwangjin.go.kr" rel="noopener">광진구청 공식 홈페이지</a></li>
-        </ul>
-      </section>
-      <section id="github">
-        <h2>GitHub</h2>
-        <ul>
-          <li><a href="https://github.com/kr-seoul-gwangjin" rel="noopener">GitHub 조직: kr-seoul-gwangjin</a></li>
-          <li><a href="https://github.com/kr-seoul-gwangjin/kr-seoul-gwangjin.github.io" rel="noopener">이 사이트 저장소</a></li>
-        </ul>
-      </section>
-      <section id="sources">
-        <h2>출처</h2>
-        <ul class="sources">
-          <li><a href="https://ko.wikipedia.org/wiki/%EA%B4%91%EC%A7%84%EA%B5%AC" rel="noopener">광진구 - 위키백과</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.gwangjin.go.kr/portal/main/main.do" rel="noopener">광진구청 공식 포털사이트</a> (조회 2026-07-08)</li>
-          <li><a href="https://ko.wikipedia.org/wiki/%EC%95%84%EC%B0%A8%EC%82%B0_%EC%9D%BC%EB%8C%80_%EB%B3%B4%EB%A3%A8%EA%B5%B0" rel="noopener">아차산 일대 보루군 - 위키백과</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.sisul.or.kr/open_content/childrenpark/" rel="noopener">서울어린이대공원 - 서울시설공단</a> (조회 2026-07-08)</li>
-        </ul>
-      </section>, always readable) -->
+    <!-- CARD 4 — FULL CONTENT (the mandatory 콘텐츠, always readable) -->
     <section class="gj-card yellow gj-content-card" data-title="광진 아카이브">
       <span class="gj-kicker">04 · 아카이브 전문</span>
       <div class="gj-panel">
@@ -932,6 +743,129 @@ body { padding-top: var(--cg-strip-h); }
   }catch(e){/* JSON optional; content already readable */}
 })();
 </script>
+  </div>
+  <main class="cg-read" id="cg-read" role="main" lang="ko" style="--cg-ra:#2baba5;--cg-ra2:#3982d0;--cg-rd:#195754">
+    <header class="cg-read-head">
+      <p class="cg-read-eyebrow">서울특별시</p>
+      <h1>광진구</h1>
+    </header>
+    <div class="cg-read-body">
+      <section id="r-intro">
+        <h2>지역 소개</h2>
+        <p>광진구는 서울특별시 동부, 한강 북안에 자리한 자치구로 1995년 성동구에서 갈라져 나온 비교적 젊은 행정구역입니다. 건국대학교와 세종대학교를 낀 건대입구 일대가 서울 동부를 대표하는 대학 상권이자 젊음의 거리로 성장하면서 밤낮없이 활기가 넘치는 곳입니다. 능동의 서울어린이대공원, 광장동의 아차산, 자양동의 뚝섬 한강변이 한 구 안에 모여 있어 도심 속에서 산과 강, 대형 공원을 동시에 누릴 수 있는 드문 생활권을 이룹니다. 구의역 앞으로 옮겨온 새 통합청사와 함께 재개발이 이어지며 주거·상업·문화 기능이 촘촘히 얽힌 도시로 자리잡았습니다. 강변역 곁의 동서울종합버스터미널은 수도권 동부와 강원 방면을 잇는 관문 역할을 오랫동안 맡아 왔습니다.</p>
+      </section>
+      <section id="r-facts">
+        <h2>주요 통계</h2>
+        <ul class="facts">
+          <li>인구: 약 337,713명 (2022)</li>
+          <li>면적: 17.06 km²</li>
+          <li>신설: 1995-03-01</li>
+        </ul>
+      </section>
+      <section id="r-history">
+        <h2>역사</h2>
+        <p>광진구라는 이름은 옛 나루터 광나루(廣津)에서 비롯된 것으로, 한강을 건너던 교통 요충지였던 이 일대의 역사를 담고 있습니다. 삼국시대에는 아차산성을 둘러싸고 고구려와 백제, 신라가 한강 유역의 패권을 다투던 전략 요충지였으며, 온달 장군과 평강공주의 전설이 서린 곳으로도 전해집니다. 조선시대에는 경기도 양주·고양 등지에 속했다가 근대 행정구역 개편을 거쳐 성동구 관할이 되었습니다. 1995년 3월 1일 성동구에서 분리되어 독립된 자치구로 신설되면서 지금의 광진구가 출범하였습니다. 이후 2008년과 2009년에 걸쳐 노유동·모진동 등이 정비되며 7개 법정동 체계로 재편되었고, 2025년 4월에는 개청 30주년을 맞아 구의역 앞 옛 서울동부지방법원 자리로 통합청사를 옮겼습니다.</p>
+      </section>
+      <section id="r-geography">
+        <h2>지리·자연환경</h2>
+        <p>광진구는 서울 동부에 위치하며 면적은 약 17.06㎢로, 북쪽으로 중랑구, 서쪽으로 동대문구·성동구와 접하고 동쪽으로는 경기도 구리시와 맞닿아 있습니다. 남쪽은 한강을 경계로 강남구·송파구·강동구를 마주보며, 강변을 따라 넓은 둔치와 한강공원이 펼쳐집니다. 구의 동쪽 경계에는 해발 287m의 아차산과 348m의 용마산이 능선을 이루며 서울과 경기의 경계 산지를 형성합니다. 이 산자락에서 흘러내린 완만한 구릉과 한강 사이의 평탄지에 시가지가 발달해 있어 산과 강이 남북으로 감싸는 지형입니다. 아차산 능선에서는 한강과 도심을 한눈에 조망할 수 있어 일출과 야경 명소로도 알려져 있습니다.</p>
+      </section>
+      <section id="r-characteristics">
+        <h2>지역 특징</h2>
+        <p>광진구의 인구는 2022년 기준 약 33만7천 명 규모로, 7개 법정동을 15개 행정동으로 나누어 관리하는 주거·상업 복합형 자치구입니다. 건국대·세종대·장로회신학대 등 대학이 밀집해 청년과 대학생 유동 인구가 많고, 건대입구의 로데오거리·양꼬치거리·먹자골목이 서울 동부의 대표 소비 상권을 이룹니다. 대규모 제조업 기반보다는 대학가 상권, 요식·유통·문화 서비스업과 강변역 일대 테크노마트·전자상가 상권이 지역 경제를 떠받칩니다. 자양동·구의동을 중심으로 한 아파트 단지와 재개발 사업으로 주거 수요가 꾸준하며, 광나루·워커힐 방면은 상대적으로 한적한 주거·자연 지대를 이룹니다. 대학의 젊은 활력과 한강·아차산의 여가 자원이 결합해 생활 밀착형 도시 성격이 뚜렷한 곳입니다.</p>
+      </section>
+      <section id="r-landmarks">
+        <h2>대표 명소</h2>
+        <ul>
+          <li><strong>서울어린이대공원</strong> — 능동에 자리한 시립 공원으로 1973년 어린이날에 개장했으며, 약 53만㎡ 부지에 동물원·식물원·놀이동산과 넓은 잔디밭을 갖춘 광진구의 대표 나들이 명소입니다.</li>
+          <li><strong>아차산</strong> — 광장동에 솟은 해발 287m의 산으로 한강과 서울 도심을 조망하는 야경·일출 명소이며, 고구려 온달 장군의 전설과 삼국시대 산성이 서린 도심형 등산지입니다.</li>
+          <li><strong>건대입구 로데오거리</strong> — 건국대학교 앞 화양동 일대에 형성된 서울 동부의 대표 번화가로, 로데오 패션거리·양꼬치거리·먹자골목과 컨테이너 쇼핑몰 커먼그라운드가 어우러진 청년 상권입니다.</li>
+          <li><strong>동서울종합버스터미널</strong> — 강변역 곁에 위치한 대형 버스터미널로 강원·충청·경기 동부를 잇는 시외·고속버스가 발착하는 서울 동부의 교통 관문입니다.</li>
+        </ul>
+      </section>
+      <section id="r-heritage">
+        <h2>문화유산·문화시설</h2>
+        <ul>
+          <li><strong>아차산성(사적 제234호)</strong> — 광장동 아차산 자락에 자리한 삼국시대 산성으로, 한강 유역을 두고 고구려·백제·신라가 다투던 전략 요충지였으며 온달 장군 전설이 전해지는 국가지정 문화재입니다.</li>
+          <li><strong>아차산 일대 보루군(사적 제455호)</strong> — 아차산·용마산 능선의 봉우리마다 축조된 고구려 소형 석축 산성 유적으로, 남한에서 드물게 고구려 유물과 유구가 집중 확인된 학술적 가치가 높은 유적입니다.</li>
+          <li><strong>나루아트센터</strong> — 광진구가 운영하는 지역 공연·전시 문화시설로 대공연장과 전시실을 갖추어 음악회·연극·전시 등 다양한 문화예술 프로그램을 주민에게 제공하는 구 대표 문화공간입니다.</li>
+          <li><strong>건국대학교 박물관</strong> — 화양동 건국대학교 캠퍼스 안에 있는 대학 박물관으로, 고고·역사 유물과 미술품을 소장·전시하여 지역민과 학생이 함께 이용하는 문화·교육 공간입니다.</li>
+        </ul>
+      </section>
+      <section id="r-nature">
+        <h2>자연·휴식</h2>
+        <ul>
+          <li><strong>뚝섬한강공원</strong> — 자양동 한강변에 조성된 대표 수변 공원으로 자전거길·산책로·수영장·물놀이장과 유람선 선착장을 갖추어 사계절 시민의 휴식과 레저 공간이 됩니다.</li>
+          <li><strong>용마산·아차산 자락길</strong> — 아차산과 용마산 능선을 잇는 완만한 산책·등산 코스로, 서울둘레길과 이어지며 한강 조망과 고구려 보루 유적을 함께 즐길 수 있는 도심 트레킹 명소입니다.</li>
+          <li><strong>어린이대공원 숲과 잔디광장</strong> — 능동 어린이대공원 내부의 푸른 숲과 넓은 잔디밭으로, 도심 한복판에서 산책과 피크닉을 즐길 수 있는 대형 녹지 휴식 공간입니다.</li>
+          <li><strong>구의공원·자양나루 일대 한강변</strong> — 구의동·자양동 한강 둔치를 따라 이어지는 산책로와 생활 체육 공간으로, 강변북로 아래로 접근해 조깅과 나들이를 즐기는 주민 생활 녹지입니다.</li>
+        </ul>
+      </section>
+      <section id="r-transport">
+        <h2>교통</h2>
+        <p>광진구는 서울 지하철 2·5·7호선이 지나 도심과 강남·잠실 방면 접근성이 뛰어납니다. 2호선은 건대입구역·구의역·강변역을 잇는 지상 구간으로 구의 남부 상권을 관통하고, 5호선은 군자역·아차산역·광나루역을 지나 동서로 연결합니다. 7호선은 중곡역·군자역·어린이대공원역·건대입구역·자양역을 지나며 건대입구역과 군자역은 각각 2호선·5호선과 만나는 환승 거점입니다. 도로는 동서 방향의 천호대로와 남북 방향의 동일로가 간선을 이루고, 한강변을 따라 강변북로가 지나 자동차 이동이 편리합니다. 강변역 곁의 동서울종합버스터미널은 강원·충청·경기 동부를 잇는 시외·고속버스 관문으로, 광진구 교통의 핵심 결절점 역할을 합니다.</p>
+      </section>
+      <section id="r-symbols">
+        <h2>지역 상징</h2>
+        <ul class="symbols">
+          <li>구화(꽃): 진달래</li>
+          <li>구목(나무): 느티나무</li>
+          <li>구조(새): 까치</li>
+        </ul>
+      </section>
+      <section id="r-faq">
+        <h2>자주 묻는 질문</h2>
+        <div class="faq">
+          <details>
+            <summary>광진구청은 어디에 있나요?</summary>
+            <p>2025년 4월 구의역 앞 옛 서울동부지방법원 자리(아차산로 400 일대)로 옮긴 신청사에 있으며, 지하철 2호선 구의역에서 바로 연결됩니다.</p>
+          </details>
+          <details>
+            <summary>광진구를 지나는 지하철 노선은 무엇인가요?</summary>
+            <p>서울 지하철 2호선(건대입구·구의·강변), 5호선(군자·아차산·광나루), 7호선(중곡·군자·어린이대공원·건대입구·자양)이 지나며 건대입구역과 군자역이 환승역입니다.</p>
+          </details>
+          <details>
+            <summary>서울어린이대공원은 무료인가요?</summary>
+            <p>능동에 있는 서울어린이대공원은 입장료가 무료이며, 동물원·식물원과 넓은 잔디밭을 갖춰 가족 나들이 명소로 인기가 높습니다.</p>
+          </details>
+          <details>
+            <summary>아차산 등산은 초보자도 할 수 있나요?</summary>
+            <p>아차산은 해발 287m로 산세가 완만해 초보자도 부담 없이 오를 수 있으며, 정상 부근에서 한강과 서울 도심의 전망을 감상할 수 있습니다.</p>
+          </details>
+          <details>
+            <summary>건대입구 상권은 어떤 곳인가요?</summary>
+            <p>건국대·세종대를 낀 화양동 일대의 대학 상권으로 로데오 패션거리, 양꼬치거리, 먹자골목과 컨테이너 쇼핑몰 커먼그라운드가 어우러진 서울 동부의 대표 번화가입니다.</p>
+          </details>
+          <details>
+            <summary>지방으로 가는 버스는 광진구에서 탈 수 있나요?</summary>
+            <p>네, 지하철 2호선 강변역 옆 동서울종합버스터미널에서 강원·충청·경기 동부 등지로 향하는 시외·고속버스를 이용할 수 있습니다.</p>
+          </details>
+        </div>
+      </section>
+      <section id="r-links">
+        <h2>공식 링크</h2>
+        <ul>
+          <li><a href="https://www.gwangjin.go.kr" rel="noopener">광진구청 공식 홈페이지</a></li>
+        </ul>
+      </section>
+      <section id="r-github">
+        <h2>GitHub</h2>
+        <ul>
+          <li><a href="https://github.com/kr-seoul-gwangjin" rel="noopener">GitHub 조직: kr-seoul-gwangjin</a></li>
+          <li><a href="https://github.com/kr-seoul-gwangjin/kr-seoul-gwangjin.github.io" rel="noopener">이 사이트 저장소</a></li>
+        </ul>
+      </section>
+      <section id="r-sources">
+        <h2>출처</h2>
+        <ul class="sources">
+          <li><a href="https://ko.wikipedia.org/wiki/%EA%B4%91%EC%A7%84%EA%B5%AC" rel="noopener">광진구 - 위키백과</a> (조회 2026-07-08)</li>
+          <li><a href="https://www.gwangjin.go.kr/portal/main/main.do" rel="noopener">광진구청 공식 포털사이트</a> (조회 2026-07-08)</li>
+          <li><a href="https://ko.wikipedia.org/wiki/%EC%95%84%EC%B0%A8%EC%82%B0_%EC%9D%BC%EB%8C%80_%EB%B3%B4%EB%A3%A8%EA%B5%B0" rel="noopener">아차산 일대 보루군 - 위키백과</a> (조회 2026-07-08)</li>
+          <li><a href="https://www.sisul.or.kr/open_content/childrenpark/" rel="noopener">서울어린이대공원 - 서울시설공단</a> (조회 2026-07-08)</li>
+        </ul>
+      </section>
+    </div>
+  </main>
   <aside class="cg-sponsors" aria-label="후원 파트너 상세">
     <p class="cg-spon-head"><span class="cg-ad">AD</span> 후원 파트너 <small>이 링크는 광고이며 편집상의 추천이 아닙니다 (rel=&quot;sponsored&quot;).</small></p>
     <ul class="cg-spon-grid">
